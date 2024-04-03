@@ -1,6 +1,6 @@
 # React TypeScript Starter Pack
 
-To use this template click `Use this template`
+ [DEMO LINK](https://Sergey-Kovyazin.github.io/todo-app/)
 
 ### Available Scripts
 
