@@ -1,28 +1,21 @@
-import React, {
-  useContext, useState, useRef, useEffect,
-} from 'react';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import { Todo } from '../../types/Todo';
 import { TodosContext } from '../../context';
 import { Loader } from '../Loader/Loader';
 
 type Props = {
-  todo: Todo,
-  isUpdating: boolean,
-  isToggleAll: boolean,
+  todo: Todo;
+  isUpdating: boolean;
+  isToggleAll: boolean;
 };
 
+// eslint-disable-next-line react/display-name
 export const TodoInfo: React.FC<Props> = React.memo(
-  ({
-    todo,
-    isUpdating,
-    isToggleAll,
-  }) => {
-    const {
-      onDelete,
-      onTitleChange,
-      onToggleStatus,
-    } = useContext(TodosContext);
+  ({ todo, isUpdating, isToggleAll }) => {
+    const { onDelete, onTitleChange, onToggleStatus } =
+      useContext(TodosContext);
     const { title, completed } = todo;
     const [todoTitle, setTodoTitle] = useState(title);
     const [isEditing, setIsEditing] = useState(false);
@@ -74,9 +67,10 @@ export const TodoInfo: React.FC<Props> = React.memo(
     }, [isEditing]);
 
     return (
-      <div className={classNames('todo', {
-        completed,
-      })}
+      <div
+        className={classNames('todo', {
+          completed,
+        })}
       >
         <label className="todo__status-label">
           <input
@@ -95,7 +89,7 @@ export const TodoInfo: React.FC<Props> = React.memo(
               className="todo__title-field"
               placeholder={title}
               value={todoTitle}
-              onChange={(event) => {
+              onChange={event => {
                 setTodoTitle(event.target.value);
               }}
               onBlur={onBlur}
@@ -105,10 +99,7 @@ export const TodoInfo: React.FC<Props> = React.memo(
           </form>
         ) : (
           <>
-            <span
-              className="todo__title"
-              onDoubleClick={onDoubleClick}
-            >
+            <span className="todo__title" onDoubleClick={onDoubleClick}>
               {todoTitle}
             </span>
             <button
@@ -119,7 +110,6 @@ export const TodoInfo: React.FC<Props> = React.memo(
               ×
             </button>
           </>
-
         )}
 
         <Loader isUpdating={isUpdating} isToggleAll={isToggleAll} />

@@ -5,19 +5,15 @@ import { TodosContext } from '../../context';
 import { useAppSelector } from '../../app/hooks/useAppSelector';
 
 type Props = {
-  newTodoTitle: string,
-  setNewTodoTitle: React.Dispatch<React.SetStateAction<string>>,
-  isActive: boolean,
-  onToggleAll: () => Promise<void>,
+  newTodoTitle: string;
+  setNewTodoTitle: React.Dispatch<React.SetStateAction<string>>;
+  isActive: boolean;
+  onToggleAll: () => Promise<void>;
 };
 
+// eslint-disable-next-line react/display-name
 export const Header: React.FC<Props> = React.memo(
-  ({
-    newTodoTitle,
-    setNewTodoTitle,
-    isActive,
-    onToggleAll,
-  }) => {
+  ({ newTodoTitle, setNewTodoTitle, isActive, onToggleAll }) => {
     const { onAdd } = useContext(TodosContext);
     const { isUpdating } = useAppSelector(state => state.todos);
 
@@ -37,7 +33,7 @@ export const Header: React.FC<Props> = React.memo(
             className="todoapp__new-todo"
             placeholder="What needs to be done?"
             value={newTodoTitle}
-            onChange={(event) => setNewTodoTitle(event.target.value)}
+            onChange={event => setNewTodoTitle(event.target.value)}
             disabled={isUpdating}
           />
         </form>

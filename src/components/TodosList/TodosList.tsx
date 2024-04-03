@@ -5,14 +5,15 @@ import { TodoInfo } from '../TodoInfo/TodoInfo';
 import { useAppSelector } from '../../app/hooks/useAppSelector';
 
 type Props = {
-  visibleTodos: Todo[],
-  tempTodo: Todo | null,
-  selectedTodoId: number | null,
-  completedTodosId: number[],
-  isClearCompletedTodos: boolean,
-  isToggleAll: boolean,
+  visibleTodos: Todo[];
+  tempTodo: Todo | null;
+  selectedTodoId: number | null;
+  completedTodosId: number[];
+  isClearCompletedTodos: boolean;
+  isToggleAll: boolean;
 };
 
+// eslint-disable-next-line react/display-name
 export const TodosList: React.FC<Props> = React.memo(
   ({
     visibleTodos,
@@ -30,19 +31,18 @@ export const TodosList: React.FC<Props> = React.memo(
           <TodoInfo
             key={todo.id}
             todo={todo}
-            isUpdating={isUpdating && (
-              !todo.id
-            || selectedTodoId === todo.id
-            || (completedTodosId.some(id => id === todo.id)
-                && isClearCompletedTodos)
-            )}
+            isUpdating={
+              isUpdating &&
+              (!todo.id ||
+                selectedTodoId === todo.id ||
+                (completedTodosId.some(id => id === todo.id) &&
+                  isClearCompletedTodos))
+            }
             isToggleAll={isToggleAll}
           />
         ))}
 
-        {tempTodo && (
-          <TodoItem tempTodo={tempTodo} />
-        )}
+        {tempTodo && <TodoItem tempTodo={tempTodo} />}
       </section>
     );
   },

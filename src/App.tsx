@@ -7,10 +7,10 @@ import { TodoApp } from './components/TodoApp/TodoApp';
 const USER_ID = 10326;
 
 export const App: React.FC = () => {
-  const [
-    currentUser,
-    setCurrentUser,
-  ] = useLocalStorage<User | null>('user', null);
+  const [currentUser, setCurrentUser] = useLocalStorage<User | null>(
+    'user',
+    null,
+  );
 
   if (!USER_ID) {
     return <UserWarning />;
@@ -18,9 +18,11 @@ export const App: React.FC = () => {
 
   return (
     <>
-      {currentUser
-        ? <TodoApp currentUser={currentUser} />
-        : <Registration setCurrentUser={setCurrentUser} />}
+      {currentUser ? (
+        <TodoApp currentUser={currentUser} />
+      ) : (
+        <Registration setCurrentUser={setCurrentUser} />
+      )}
     </>
   );
 };

@@ -12,11 +12,16 @@ export const Error: React.FC = () => {
   return (
     <>
       {errorMessage && (
-        <div className={classNames(
-          'notification', 'is-danger', 'is-light', 'has-text-weight-normal', {
-            hidden: !errorMessage,
-          },
-        )}
+        <div
+          className={classNames(
+            'notification',
+            'is-danger',
+            'is-light',
+            'has-text-weight-normal',
+            {
+              hidden: !errorMessage,
+            },
+          )}
         >
           <button
             type="button"

@@ -1,9 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Todo } from '../../types/Todo';
-import {
-  addTodo, deleteTodo, getTodos, updateTodo,
-} from '../../api/todos';
+import { addTodo, deleteTodo, getTodos, updateTodo } from '../../api/todos';
 
 export enum Status {
   All = 'All',
@@ -13,7 +11,7 @@ export enum Status {
 
 type State = {
   todos: Todo[];
-  status: Status
+  status: Status;
   isUpdating: boolean;
 };
 
@@ -39,7 +37,7 @@ export const deleteTodosAsync = createAsyncThunk(
   'todos/deleteTodo',
   async (id: number | number[]) => {
     if (Array.isArray(id)) {
-      await Promise.all(id.map((todoId) => deleteTodo(todoId)));
+      await Promise.all(id.map(todoId => deleteTodo(todoId)));
     } else {
       await deleteTodo(id);
     }
@@ -70,9 +68,9 @@ const todosSlice = createSlice({
       state.status = action.payload;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(initTodosAsync.pending, (state) => {
+      .addCase(initTodosAsync.pending, state => {
         state.isUpdating = true;
       })
       .addCase(
@@ -82,14 +80,14 @@ const todosSlice = createSlice({
           state.isUpdating = false;
         },
       )
-      .addCase(addTodoAsync.pending, (state) => {
+      .addCase(addTodoAsync.pending, state => {
         state.isUpdating = true;
       })
       .addCase(addTodoAsync.fulfilled, (state, action) => {
         state.todos.push(action.payload);
         state.isUpdating = false;
       })
-      .addCase(deleteTodosAsync.pending, (state) => {
+      .addCase(deleteTodosAsync.pending, state => {
         state.isUpdating = true;
       })
       .addCase(deleteTodosAsync.fulfilled, (state, action) => {
@@ -97,19 +95,18 @@ const todosSlice = createSlice({
           ? action.payload
           : [action.payload];
 
-        state.todos = state.todos.filter(
-          (todo) => !deletedIds.includes(todo.id),
-        );
+        state.todos = state.todos.filter(todo => !deletedIds.includes(todo.id));
         state.isUpdating = false;
       })
-      .addCase(updateTodosAsync.pending, (state) => {
+      .addCase(updateTodosAsync.pending, state => {
         state.isUpdating = true;
       })
       .addCase(updateTodosAsync.fulfilled, (state, action) => {
         const { id, changes } = action.payload;
 
-        state.todos = state.todos
-          .map((todo) => (todo.id === id ? { ...todo, ...changes } : todo));
+        state.todos = state.todos.map(todo =>
+          todo.id === id ? { ...todo, ...changes } : todo,
+        );
         state.isUpdating = false;
       });
   },

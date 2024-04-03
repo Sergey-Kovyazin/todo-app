@@ -14,10 +14,7 @@ export const addTodo = (userId: number, title: string) => {
   });
 };
 
-export const updateTodo = (
-  todoId: number,
-  data: {},
-) => {
+export const updateTodo = (todoId: number, data: {}) => {
   return client.patch<Todo>(`/todos/${todoId}`, data);
 };
 

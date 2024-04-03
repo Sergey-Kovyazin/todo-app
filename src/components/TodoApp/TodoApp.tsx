@@ -1,6 +1,4 @@
-import React, {
-  useEffect, useMemo, useState,
-} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Todo } from '../../types/Todo';
 import { User } from '../../types/User';
@@ -24,19 +22,21 @@ import { clearError, setError } from '../../app/features/error';
 export const USER_ID = 10326;
 
 type Props = {
-  currentUser: User,
+  currentUser: User;
 };
 
 export const TodoApp: React.FC<Props> = ({ currentUser }) => {
   const dispatch = useAppDispatch();
   const { todos, status } = useAppSelector(state => state.todos);
 
-  const todosCompleted = useMemo(() => todos
-    .filter(todo => todo.completed), [todos]);
+  const todosCompleted = useMemo(
+    () => todos.filter(todo => todo.completed),
+    [todos],
+  );
   const isActive = todosCompleted.length === todos.length;
   const completedTodosId = useMemo(() => {
     return todosCompleted.map(todo => todo.id);
-  }, [todos]);
+  }, [todosCompleted]);
 
   const [newTodoTitle, setNewTodoTitle] = useState('');
 
@@ -48,7 +48,7 @@ export const TodoApp: React.FC<Props> = ({ currentUser }) => {
 
   useEffect(() => {
     dispatch(initTodosAsync(currentUser.id));
-  }, [currentUser.id]);
+  }, [currentUser.id, dispatch]);
 
   // #region TodosHandlers
   const onAdd = async (event: React.FormEvent) => {
@@ -58,7 +58,7 @@ export const TodoApp: React.FC<Props> = ({ currentUser }) => {
     dispatch(clearError());
 
     if (!newTodoTitle.trim()) {
-      dispatch(setError('Title can\'t be empty'));
+      dispatch(setError("Title can't be empty"));
 
       return;
     }
@@ -70,10 +70,12 @@ export const TodoApp: React.FC<Props> = ({ currentUser }) => {
       completed: false,
     });
 
-    await dispatch(addTodoAsync({
-      userId: currentUser.id,
-      title: newTodoTitle,
-    }));
+    await dispatch(
+      addTodoAsync({
+        userId: currentUser.id,
+        title: newTodoTitle,
+      }),
+    );
 
     setTempTodo(null);
     setNewTodoTitle('');
@@ -129,17 +131,20 @@ export const TodoApp: React.FC<Props> = ({ currentUser }) => {
     setIsToggleAll(true);
     try {
       await Promise.all(
-        todos.map((todo) => {
+        todos.map(todo => {
           if (!todo.completed) {
-            dispatch(updateTodosAsync(
-              { id: todo.id, changes: { completed: true } },
-            ));
+            dispatch(
+              updateTodosAsync({ id: todo.id, changes: { completed: true } }),
+            );
           }
 
           if (completedTodosId.length === todos.length) {
-            dispatch(updateTodosAsync(
-              { id: todo.id, changes: { completed: !todo.completed } },
-            ));
+            dispatch(
+              updateTodosAsync({
+                id: todo.id,
+                changes: { completed: !todo.completed },
+              }),
+            );
           }
 
           return todo;
@@ -204,9 +209,7 @@ export const TodoApp: React.FC<Props> = ({ currentUser }) => {
                 isToggleAll={isToggleAll}
               />
 
-              <Footer
-                onDeleteCompleted={onDeleteCompleted}
-              />
+              <Footer onDeleteCompleted={onDeleteCompleted} />
             </>
           )}
         </div>

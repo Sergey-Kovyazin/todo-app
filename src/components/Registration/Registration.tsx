@@ -7,13 +7,12 @@ import { useAppDispatch } from '../../app/hooks/useAppDispatch';
 import { clearError, setError } from '../../app/features/error';
 
 type Props = {
-  setCurrentUser: (newValue: User | null) => void,
+  setCurrentUser: (newValue: User | null) => void;
 };
 
+// eslint-disable-next-line react/display-name
 export const Registration: React.FC<Props> = React.memo(
-  ({
-    setCurrentUser,
-  }) => {
+  ({ setCurrentUser }) => {
     const [isRegistrated, setIsRegistrated] = useState(true);
     const dispatch = useAppDispatch();
     const logIn = async (email: string) => {
@@ -71,9 +70,10 @@ export const Registration: React.FC<Props> = React.memo(
     return (
       <>
         <div className="registration">
-          <div className={classNames('registration__wrapper', {
-            'registration__wrapper--signIn': !isRegistrated,
-          })}
+          <div
+            className={classNames('registration__wrapper', {
+              'registration__wrapper--signIn': !isRegistrated,
+            })}
           >
             <h2>{isRegistrated ? 'Please log in' : 'Please sign in'}</h2>
             <form onSubmit={onSubmit} className="form registration__form">

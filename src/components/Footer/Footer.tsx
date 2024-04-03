@@ -5,9 +5,10 @@ import { Status, setStatus } from '../../app/features/todos';
 import { useAppDispatch } from '../../app/hooks/useAppDispatch';
 
 type Props = {
-  onDeleteCompleted: () => Promise<void>,
+  onDeleteCompleted: () => Promise<void>;
 };
 
+// eslint-disable-next-line react/display-name
 export const Footer: React.FC<Props> = React.memo(({ onDeleteCompleted }) => {
   const dispatch = useAppDispatch();
   const { todos, status } = useAppSelector(state => state.todos);
@@ -16,9 +17,7 @@ export const Footer: React.FC<Props> = React.memo(({ onDeleteCompleted }) => {
 
   return (
     <footer className="todoapp__footer">
-      <span className="todo-count">
-        {`${todosLeft} items left`}
-      </span>
+      <span className="todo-count">{`${todosLeft} items left`}</span>
 
       <nav className="filter">
         <a
